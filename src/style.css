@@ -1,0 +1,252 @@
+:root {
+  --primary: #ef4444; /* Red accent for meat/churrasco */
+  --primary-dark: #dc2626;
+  --bg-dark: #121212;
+  --bg-card: #1e1e1e;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  
+  --status-red: #ef4444;
+  --status-yellow: #f59e0b;
+  --status-green: #10b981;
+  
+  --border-color: #27272a;
+  
+  --nav-height: 65px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: var(--nav-height); /* Space for bottom nav */
+}
+
+/* App Shell Layout */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background-color: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+main#app-content {
+  padding: 1.5rem 1rem;
+  min-height: calc(100vh - 75px - var(--nav-height));
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 50;
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.nav-item svg {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-item.active svg {
+  transform: translateY(-2px) scale(1.1);
+}
+
+/* Common UI Elements */
+.card {
+  background-color: var(--bg-card);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  width: 100%;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-select, .form-input {
+  width: 100%;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-select:focus, .form-input:focus {
+  border-color: var(--primary);
+}
+
+/* Typography */
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view-enter {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Print Styles */
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 0;
+    size: 40mm 40mm; /* Tamanho da impressora térmica */
+  }
+  body {
+    background-color: white;
+    color: black;
+    padding: 0;
+    margin: 0;
+  }
+  .app-header, .bottom-nav, #print-form-card, h1 {
+    display: none !important;
+  }
+  main#app-content {
+    padding: 0;
+    margin: 0;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .etiqueta {
+    width: 40mm;
+    height: 40mm;
+    padding: 2mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  .etiqueta-header {
+    font-size: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .etiqueta-produto {
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+  .etiqueta-info {
+    font-size: 7px;
+    margin-bottom: 4px;
+    text-align: left;
+    width: 100%;
+  }
+  .etiqueta-qr canvas {
+    width: 20mm !important;
+    height: 20mm !important;
+  }
+}
