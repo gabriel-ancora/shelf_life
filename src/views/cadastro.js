@@ -13,8 +13,8 @@ export default async function renderCadastroView(container) {
           <input type="text" id="prod-nome" class="form-input" placeholder="Ex: Picanha Fatiada" required>
         </div>
         <div class="form-group">
-          <label class="form-label" for="prod-validade">Tempo de Validade (Horas)</label>
-          <input type="number" id="prod-validade" class="form-input" placeholder="Ex: 48" required min="1">
+          <label class="form-label" for="prod-validade">Tempo de Validade (Dias)</label>
+          <input type="number" id="prod-validade" class="form-input" placeholder="Ex: 2" required min="1">
         </div>
         <button type="submit" class="btn" id="btn-salvar-produto">Salvar Produto</button>
       </form>
@@ -41,12 +41,12 @@ export default async function renderCadastroView(container) {
     btnSalvarProduto.textContent = 'Salvando...';
     
     const nome = container.querySelector('#prod-nome').value;
-    const validade = container.querySelector('#prod-validade').value;
+    const validadeDias = parseInt(container.querySelector('#prod-validade').value);
     
     try {
       const { error } = await supabase.from('produtos').insert([{ 
         nome, 
-        tempo_validade_horas: parseInt(validade) 
+        tempo_validade_horas: validadeDias * 24 
       }]);
       if (error) throw error;
       

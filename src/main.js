@@ -1,5 +1,6 @@
 import { registerSW } from 'virtual:pwa-register';
 import { ConfirmDialog } from './utils/alerts.js';
+import { initNotifications } from './utils/notifications.js';
 
 // Register Service Worker for PWA
 const updateSW = registerSW({
@@ -72,3 +73,6 @@ navItems.forEach(item => {
 
 // Initialize with default route
 navigateTo('print');
+
+// Initialize notifications system
+initNotifications();

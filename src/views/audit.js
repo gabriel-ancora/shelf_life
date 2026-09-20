@@ -25,6 +25,7 @@ export default async function renderAuditView(container) {
         id,
         numero_pote,
         local_id,
+        data_fabricacao,
         produtos ( nome )
       `)
       .eq('status', 'ativo');
@@ -49,16 +50,20 @@ export default async function renderAuditView(container) {
       const card = document.createElement('div');
       card.className = 'card';
       
-      let itemsHtml = items.map(i => `
+      let itemsHtml = items.map(i => {
+        const fabDate = new Date(i.data_fabricacao);
+        const fabStr = isNaN(fabDate.getTime()) ? 'N/A' : fabDate.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        return `
         <div style="padding: 0.5rem 1rem; background: var(--bg-dark); border-radius: 0.5rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; min-width: 100px;">
           <span style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;" title="${i.produtos.nome}">${i.produtos.nome}</span>
           <span style="font-weight: 600;">Pote ${i.numero_pote}</span>
+          <span style="font-size: 0.65rem; color: var(--text-muted); margin-top: 2px;">Fab: ${fabStr}</span>
           <select class="move-select" data-id="${i.id}" style="margin-top: 0.5rem; background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); border-radius: 4px; padding: 2px; font-size: 0.7rem;">
             <option value="" disabled selected>Mover...</option>
             ${locais.map(loc => `<option value="${loc.id}">Mover para ${loc.nome}</option>`).join('')}
           </select>
         </div>
-      `).join('');
+      `;}).join('');
 
       if (items.length === 0) {
         itemsHtml = '<p style="color: var(--text-muted); font-size: 0.8rem;">Vazio</p>';
