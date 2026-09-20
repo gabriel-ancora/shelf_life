@@ -1,4 +1,5 @@
 import { supabase } from '../supabase.js';
+import { Toast } from '../utils/alerts.js';
 
 export default async function renderCadastroView(container) {
   container.innerHTML = `
@@ -49,11 +50,11 @@ export default async function renderCadastroView(container) {
       }]);
       if (error) throw error;
       
-      alert('Produto cadastrado com sucesso!');
+      Toast.fire({ icon: 'success', title: 'Produto cadastrado!' });
       formProduto.reset();
     } catch (err) {
       console.error(err);
-      alert('Erro ao cadastrar produto.');
+      Toast.fire({ icon: 'error', title: 'Erro ao cadastrar produto.' });
     } finally {
       btnSalvarProduto.disabled = false;
       btnSalvarProduto.textContent = 'Salvar Produto';
@@ -74,11 +75,11 @@ export default async function renderCadastroView(container) {
       const { error } = await supabase.from('locais').insert([{ nome }]);
       if (error) throw error;
       
-      alert('Local cadastrado com sucesso!');
+      Toast.fire({ icon: 'success', title: 'Local cadastrado!' });
       formLocal.reset();
     } catch (err) {
       console.error(err);
-      alert('Erro ao cadastrar local.');
+      Toast.fire({ icon: 'error', title: 'Erro ao cadastrar local.' });
     } finally {
       btnSalvarLocal.disabled = false;
       btnSalvarLocal.textContent = 'Salvar Local';

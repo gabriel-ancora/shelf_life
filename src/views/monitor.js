@@ -1,4 +1,5 @@
 import { supabase } from '../supabase.js';
+import { Toast, ConfirmDialog } from '../utils/alerts.js';
 
 export default async function renderMonitorView(container) {
   container.innerHTML = `
@@ -84,20 +85,27 @@ export default async function renderMonitorView(container) {
         const id = btnElement.getAttribute('data-id');
         const action = btnElement.getAttribute('data-action');
         
-        if(confirm(`Confirmar que o pote foi ${action}?`)) {
-          btnElement.disabled = true;
-          try {
-            const { error: updErr } = await supabase.from('lotes').update({ status: action }).eq('id', id);
-            if (updErr) throw updErr;
-            
-            // Recarregar a tela para refletir a mudança
-            renderMonitorView(container);
-          } catch (err) {
-            console.error(err);
-            alert('Erro ao dar baixa.');
-            btnElement.disabled = false;
+        ConfirmDialog.fire({
+          title: 'Atenção',
+          text: `Confirmar que o pote foi ${action}?`,
+          icon: 'question'
+        }).then(async (result) => {
+          if(result.isConfirmed) {
+            btnElement.disabled = true;
+            try {
+              const { error: updErr } = await supabase.from('lotes').update({ status: action }).eq('id', id);
+              if (updErr) throw updErr;
+              
+              Toast.fire({ icon: 'success', title: 'Status atualizado com sucesso!' });
+              // Recarregar a tela para refletir a mudança
+              renderMonitorView(container);
+            } catch (err) {
+              console.error(err);
+              Toast.fire({ icon: 'error', title: 'Erro ao dar baixa.' });
+              btnElement.disabled = false;
+            }
           }
-        }
+        });
       });
     });
 

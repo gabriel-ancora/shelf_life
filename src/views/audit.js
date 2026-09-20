@@ -1,4 +1,5 @@
 import { supabase } from '../supabase.js';
+import { Toast } from '../utils/alerts.js';
 
 export default async function renderAuditView(container) {
   container.innerHTML = `
@@ -14,6 +15,8 @@ export default async function renderAuditView(container) {
     // Buscar todos os locais
     const { data: locais, error: locErr } = await supabase.from('locais').select('*').order('nome');
     if (locErr) throw locErr;
+    
+    locais.sort((a, b) => a.nome.localeCompare(b.nome));
 
     // Buscar lotes ativos
     const { data: lotes, error: loteErr } = await supabase
@@ -93,10 +96,11 @@ export default async function renderAuditView(container) {
           if (updErr) throw updErr;
           
           // Recarregar a tela para refletir a mudança
+          Toast.fire({ icon: 'success', title: 'Pote movido com sucesso!' });
           renderAuditView(container);
         } catch (err) {
           console.error(err);
-          alert('Erro ao mover pote.');
+          Toast.fire({ icon: 'error', title: 'Erro ao mover pote.' });
           e.target.disabled = false;
         }
       });

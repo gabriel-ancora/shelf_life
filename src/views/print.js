@@ -1,6 +1,7 @@
 import { supabase } from '../supabase.js';
 import QRCode from 'qrcode';
 import 'niimbot-web-bluetooth';
+import { Toast } from '../utils/alerts.js';
 
 // Configuração Padrão para impressora NIIMBOT B1 (203 dpi)
 // Papel assumido: 50x30mm
@@ -62,6 +63,8 @@ export default async function renderPrintView(container) {
     const { data: produtos, error: pError } = await supabase.from('produtos').select('*').order('nome');
     if (pError) throw pError;
     
+    produtos.sort((a, b) => a.nome.localeCompare(b.nome));
+    
     produtos.forEach(p => {
       produtosMap[p.id] = p;
       const opt = document.createElement('option');
@@ -73,6 +76,8 @@ export default async function renderPrintView(container) {
     const { data: locais, error: lError } = await supabase.from('locais').select('*').order('nome');
     if (lError) throw lError;
 
+    locais.sort((a, b) => a.nome.localeCompare(b.nome));
+
     locais.forEach(l => {
       const opt = document.createElement('option');
       opt.value = l.id;
@@ -81,7 +86,7 @@ export default async function renderPrintView(container) {
     });
   } catch (err) {
     console.error('Erro ao carregar dados:', err);
-    alert('Erro ao carregar produtos/locais.');
+    Toast.fire({ icon: 'error', title: 'Erro ao carregar dados' });
   }
 
   // Função para desenhar a etiqueta no Canvas 384x240 (Preto e Branco)
@@ -128,7 +133,7 @@ export default async function renderPrintView(container) {
 
     // Verificação de suporte Bluetooth
     if (!window.Niimbot || !window.Niimbot.isSupported()) {
-      alert("Seu navegador não suporta Web Bluetooth. Use o Chrome no Android ou PC (não funciona no iOS/Safari).");
+      Toast.fire({ icon: 'warning', title: 'Navegador não suportado', text: 'Use o Chrome no Android ou PC para usar o Bluetooth.' });
       return;
     }
 
@@ -195,7 +200,7 @@ export default async function renderPrintView(container) {
       console.error('Erro no fluxo de impressão:', error);
       btStatus.textContent = 'Status: Falha na impressão/conexão';
       btStatus.style.color = 'var(--status-red)';
-      alert('Falha: ' + (error.message || 'Erro desconhecido'));
+      Toast.fire({ icon: 'error', title: 'Falha na impressão', text: error.message || 'Erro desconhecido' });
     } finally {
       printBtn.disabled = false;
       printBtn.textContent = 'Conectar e Imprimir (Bluetooth)';

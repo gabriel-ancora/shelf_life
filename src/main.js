@@ -1,11 +1,19 @@
 import { registerSW } from 'virtual:pwa-register';
+import { ConfirmDialog } from './utils/alerts.js';
 
 // Register Service Worker for PWA
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm('Nova versão disponível. Atualizar agora?')) {
-      updateSW(true);
-    }
+    ConfirmDialog.fire({
+      title: 'Atualização disponível!',
+      text: 'Uma nova versão do app está pronta.',
+      icon: 'info',
+      confirmButtonText: 'Atualizar agora'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateSW(true);
+      }
+    });
   },
   onOfflineReady() {
     console.log('App pronto para funcionar offline.');
