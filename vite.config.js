@@ -5,22 +5,27 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg'],
+      includeAssets: ['logo.jpg'],
       manifest: {
-        name: 'Churras Express - Validade',
-        short_name: 'ChurrasExp',
+        name: 'Shelf Life - Controle de Validade',
+        short_name: 'ShelfLife',
         description: 'Controle de Validade de Produtos',
-        theme_color: '#121212',
-        background_color: '#121212',
+        theme_color: '#F9F9F6',
+        background_color: '#F9F9F6',
         display: 'standalone',
         icons: [
           {
-            src: 'icon.svg',
+            src: 'logo.jpg',
             sizes: '192x192 512x512',
-            type: 'image/svg+xml',
+            type: 'image/jpeg',
             purpose: 'any maskable'
           }
         ]
+      },
+      workbox: {
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true
       }
     })
   ]

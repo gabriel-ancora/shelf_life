@@ -63,7 +63,7 @@ export default async function renderAuditView(container) {
 
       card.innerHTML = `
         <h2 style="color: var(--primary); display: flex; align-items: center; justify-content: space-between; font-size: 1.1rem;">
-          <span style="display: flex; align-items: center; gap: 0.5rem;">📍 ${localName}</span>
+          <span style="display: flex; align-items: center; gap: 0.5rem;">${localName}</span>
           <span style="font-size: 0.8rem; background: var(--bg-dark); padding: 0.2rem 0.6rem; border-radius: 1rem; color: var(--text-muted)">${items.length} potes</span>
         </h2>
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">

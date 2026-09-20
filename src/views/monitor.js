@@ -64,9 +64,13 @@ export default async function renderMonitorView(container) {
             <p class="form-label" style="margin-bottom: 0; font-weight: 600;">${statusText}</p>
             <p class="form-label" style="font-size: 0.75rem; margin-top: 0.25rem;">Vence: ${formatData(validade)}</p>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-left: 1rem;">
-             <button class="btn btn-baixa" data-id="${lote.id}" data-action="consumido" style="padding: 0.5rem 1rem; background-color: var(--status-green); border: none; font-size: 0.8rem;">Usado</button>
-             <button class="btn btn-baixa" data-id="${lote.id}" data-action="descartado" style="padding: 0.5rem 1rem; background-color: transparent; border: 1px solid var(--status-red); color: var(--status-red); font-size: 0.8rem;">Descartar</button>
+          <div style="display: flex; gap: 0.75rem; margin-left: 1rem; align-items: center;">
+             <button class="btn btn-baixa" data-id="${lote.id}" data-action="consumido" style="padding: 0.8rem; background-color: var(--status-green); border: none; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;" title="Marcar como Usado">
+               <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+             </button>
+             <button class="btn btn-baixa" data-id="${lote.id}" data-action="descartado" style="padding: 0.8rem; background-color: transparent; border: 2px solid var(--status-red); color: var(--status-red); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center;" title="Descartar">
+               <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+             </button>
           </div>
         </div>
       `;
@@ -76,11 +80,12 @@ export default async function renderMonitorView(container) {
     // Adicionar eventos para dar baixa
     container.querySelectorAll('.btn-baixa').forEach(btn => {
       btn.addEventListener('click', async (e) => {
-        const id = e.target.getAttribute('data-id');
-        const action = e.target.getAttribute('data-action');
+        const btnElement = e.currentTarget;
+        const id = btnElement.getAttribute('data-id');
+        const action = btnElement.getAttribute('data-action');
         
         if(confirm(`Confirmar que o pote foi ${action}?`)) {
-          e.target.disabled = true;
+          btnElement.disabled = true;
           try {
             const { error: updErr } = await supabase.from('lotes').update({ status: action }).eq('id', id);
             if (updErr) throw updErr;
@@ -90,7 +95,7 @@ export default async function renderMonitorView(container) {
           } catch (err) {
             console.error(err);
             alert('Erro ao dar baixa.');
-            e.target.disabled = false;
+            btnElement.disabled = false;
           }
         }
       });

@@ -110,8 +110,8 @@ main#app-content {
 }
 
 .nav-item.active svg {
-  transform: translateY(-4px) scale(1.15);
-  stroke-width: 2.5;
+  transform: translateY(-2px) scale(1.05);
+  stroke-width: 2.2;
 }
 
 /* Common UI Elements */
@@ -126,8 +126,7 @@ main#app-content {
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -5px rgba(0, 0, 0, 0.02);
 }
 
 .btn {
@@ -151,8 +150,8 @@ main#app-content {
 }
 
 .btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 2px 6px rgba(153, 27, 27, 0.2);
+  transform: scale(0.99);
+  box-shadow: 0 2px 4px rgba(153, 27, 27, 0.15);
 }
 
 .btn-secondary {
@@ -173,41 +172,52 @@ main#app-content {
 
 .form-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-main);
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .form-select, .form-input {
   width: 100%;
-  background-color: #F3F4F6;
-  border: 1px solid transparent;
+  background-color: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
   color: var(--text-main);
-  padding: 0.875rem 1rem;
-  border-radius: 0.85rem;
+  padding: 1rem 1.2rem;
+  border-radius: 0.75rem;
   font-family: inherit;
-  font-size: 1rem;
-  transition: all 0.2s ease;
+  font-size: 1.05rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
-  box-shadow: var(--input-shadow);
-  appearance: none; /* Removes native select styling */
+  appearance: none;
+}
+
+.form-input::placeholder {
+  color: #9CA3AF;
+  font-weight: 400;
 }
 
 /* Custom dropdown arrow for select */
 select.form-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234B5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1.2rem;
-  padding-right: 2.5rem;
+  background-position: right 1.2rem center;
+  background-size: 1.4rem;
+  padding-right: 3rem;
+  font-weight: 500;
+}
+
+.form-select:hover, .form-input:hover {
+  background-color: #FFFFFF;
+  border-color: #D1D5DB;
 }
 
 .form-select:focus, .form-input:focus {
-  background-color: var(--bg-card);
+  background-color: #FFFFFF;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(153, 27, 27, 0.1);
+  box-shadow: 0 0 0 4px rgba(153, 27, 27, 0.15);
+  transform: translateY(-1px);
 }
 
 /* Typography */
@@ -227,12 +237,12 @@ h2 {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
+  from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .view-enter {
-  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.25s ease-out forwards;
 }
 
 /* Print Styles */

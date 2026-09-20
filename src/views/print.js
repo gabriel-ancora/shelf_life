@@ -15,21 +15,21 @@ export default async function renderPrintView(container) {
       <form id="print-form">
         <div class="form-group">
           <label class="form-label" for="produto-select">Produto</label>
-          <select id="produto-select" class="form-control" required>
+          <select id="produto-select" class="form-select" required>
             <option value="" disabled selected>Selecione um produto...</option>
           </select>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="local-select">Local de Armazenamento</label>
-          <select id="local-select" class="form-control" required>
+          <select id="local-select" class="form-select" required>
             <option value="" disabled selected>Selecione o local...</option>
           </select>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="pote-input">Número do Pote/Embalagem</label>
-          <input type="number" id="pote-input" class="form-control" placeholder="Ex: 1, 2, 3..." required min="1">
+          <input type="number" id="pote-input" class="form-input" placeholder="Ex: 1, 2, 3..." required min="1">
         </div>
 
         <!-- Hidden canvas for QRCode generation -->
@@ -38,7 +38,7 @@ export default async function renderPrintView(container) {
         <canvas id="label-canvas" width="384" height="240" style="display: none;"></canvas>
 
         <button type="submit" class="btn btn-primary" id="print-btn">
-          🖨️ Conectar e Imprimir (Bluetooth)
+          Conectar e Imprimir (Bluetooth)
         </button>
       </form>
     </div>
@@ -185,7 +185,7 @@ export default async function renderPrintView(container) {
         copies: 1 
       });
 
-      btStatus.textContent = 'Status: Impressão finalizada com sucesso! ✅';
+      btStatus.textContent = 'Status: Impressão finalizada com sucesso!';
       btStatus.style.color = 'var(--status-green)';
       
       // Limpar form
@@ -193,12 +193,12 @@ export default async function renderPrintView(container) {
 
     } catch (error) {
       console.error('Erro no fluxo de impressão:', error);
-      btStatus.textContent = 'Status: Falha na impressão/conexão ❌';
+      btStatus.textContent = 'Status: Falha na impressão/conexão';
       btStatus.style.color = 'var(--status-red)';
       alert('Falha: ' + (error.message || 'Erro desconhecido'));
     } finally {
       printBtn.disabled = false;
-      printBtn.textContent = '🖨️ Conectar e Imprimir (Bluetooth)';
+      printBtn.textContent = 'Conectar e Imprimir (Bluetooth)';
     }
   });
 }

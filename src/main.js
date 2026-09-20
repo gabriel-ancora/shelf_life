@@ -17,6 +17,7 @@ import renderPrintView from './views/print.js';
 import renderMonitorView from './views/monitor.js';
 import renderAuditView from './views/audit.js';
 import renderDashboardView from './views/dashboard.js';
+import renderCadastroView from './views/cadastro.js';
 
 const appContent = document.getElementById('app-content');
 const navItems = document.querySelectorAll('.nav-item');
@@ -25,7 +26,8 @@ const routes = {
   print: renderPrintView,
   monitor: renderMonitorView,
   audit: renderAuditView,
-  dashboard: renderDashboardView
+  dashboard: renderDashboardView,
+  cadastro: renderCadastroView
 };
 
 function navigateTo(route) {
